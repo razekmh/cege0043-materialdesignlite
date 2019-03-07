@@ -26,6 +26,7 @@
     
     
     var client;
+    var earthquakes;
 
             // create the code to get the Earthquakes data using an XMLHttpRequest
         function getEarthquakes() {
@@ -40,13 +41,15 @@
             if (client.readyState == 4) {
             // once the data is ready, process the data
             var earthquakedata = client.responseText;
-            loadEarthquakelayer(earthquakedata);
+            loadGeoJSONLayer(earthquakedata);
             }
             }
          
-         function loadEarthquakelayer(earthquakedata) {
+         function loadGeoJSONLayer(earthquakedata) {
             // convert the text to JSON
             var earthquakejson = JSON.parse(earthquakedata);
+            // assigns the parsed earthquake json data to the earthquake var
+            earthquakes = earthquakejson;
             // add the JSON layer onto the map - it will appear using the default icons
             earthquakelayer = L.geoJson(earthquakejson).addTo(mymap);
             // change the map zoom so that all the data is shown
