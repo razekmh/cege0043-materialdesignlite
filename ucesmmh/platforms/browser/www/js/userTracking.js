@@ -3,6 +3,7 @@ function trackLocation() {
 		if (navigator.geolocation) {
 			navigator.geolocation.watchPosition(addpoint);
 			getDistance();
+			getEarthquakes();
 		} 
 		else {
 		document.getElementById('showLocation').innerHTML = "Geolocation is not supported by this browser.";
@@ -24,7 +25,7 @@ function addpoint (position) {
 function getDistance() {
 		//alert('getting distance');
 		// getDistanceFromPoint is the function called once the distance has been found
-		navigator.geolocation.getCurrentPosition(getDistanceFromPoint);
+		navigator.geolocation.getCurrentPosition(getDistanceFromMultiplePoints);
 	}
 
 
@@ -59,5 +60,20 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 		if (unit=="N") { dist = dist * 0.8684 ;} // convert miles to nautical miles
 		return dist;
 		}
+
+function getDistanceFromMultiplePoints(position) { 
+	var minDistance = 100000000000;
+	var closestQuake = "";
+	for(var i = 0; i < earthquakes.features.length; i++) {
+		var obj = earthquakes.features[i];
+		var distance = calculateDistance(position.coords.latitude,
+		position.coords.longitude,obj.geometry.coordinates[0], obj.geometry.coordinates[1], 'K');
+		if (distance < minDistance){
+			minDistance = distance;
+			closestQuake = obj.properties.place;
+			}
+		}
+	alert("Earthquake: " + closestQuake + " is distance " + minDistance + "away");
+	}
 
 
