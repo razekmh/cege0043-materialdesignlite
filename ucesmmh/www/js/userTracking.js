@@ -2,6 +2,7 @@ var userMarker
 function trackLocation() {
 		if (navigator.geolocation) {
 			navigator.geolocation.watchPosition(addpoint);
+			getDistance();
 		} 
 		else {
 		document.getElementById('showLocation').innerHTML = "Geolocation is not supported by this browser.";
@@ -21,7 +22,7 @@ function addpoint (position) {
          		}
 
 function getDistance() {
-		alert('getting distance');
+		//alert('getting distance');
 		// getDistanceFromPoint is the function called once the distance has been found
 		navigator.geolocation.getCurrentPosition(getDistanceFromPoint);
 	}
@@ -34,7 +35,10 @@ function getDistanceFromPoint(position) {
 		var lng = -0.13818;
 		// return the distance in kilometers
 		var distance = calculateDistance(position.coords.latitude, position.coords.longitude, lat,lng, 'K');
-		document.getElementById('showDistance').innerHTML = "Distance: " + distance;
+		if (distance <= 100) {
+			alert ("ops")
+		}
+		//document.getElementById('showDistance').innerHTML = "Distance: " + distance;
 	}
 	
 
