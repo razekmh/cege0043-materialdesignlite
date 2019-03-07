@@ -20,9 +20,11 @@
         fillColor: '#f03',
         fillOpacity: 0.5
         }).addTo(mymap).bindPopup("I am a polygon.");
+
+        //var mymap = L.map('mapid').setView([51.509, -0.08], 18);
         }
     
-
+    
     var client;
 
             // create the code to get the Earthquakes data using an XMLHttpRequest
